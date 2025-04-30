@@ -3,14 +3,14 @@ import React from 'react';
 import Image from 'next/image';
 
 interface AlbumCardProps {
-  _id: string;
-  id : string;  
+  // _id: string;
+  // id : string;  
   title: string;
   image: string;
   createdAt: string;
 }
 
-const AlbumCard: React.FC<AlbumCardProps> = ({_id, id, title,  image, createdAt }) => {
+const AlbumCard: React.FC<AlbumCardProps> = ({ title,  image, createdAt }) => {
   return (
     <div style={cardStyle}>
         <div style={{ width: '100%', height: '300px', position: 'relative' }} >
@@ -41,10 +41,10 @@ const cardStyle: React.CSSProperties = {
     position: 'relative', // Ensure the image inside uses 'position: absolute' correctly
 };
 
-const imageStyle = {
-  width: '100%',
-  height: 'auto',
-};
+// const imageStyle = {
+//   width: '100%',
+//   height: 'auto',
+// };
 
 const textContainerStyle = {
   padding: '15px',
@@ -56,11 +56,11 @@ const titleStyle = {
   marginBottom: '5px',
 };
 
-const artistStyle = {
-  fontSize: '14px',
-  color: '#555',
-  marginBottom: '10px',
-};
+// const artistStyle = {
+//   fontSize: '14px',
+//   color: '#555',
+//   marginBottom: '10px',
+// };
 
 const releaseDateStyle = {
   fontSize: '12px',

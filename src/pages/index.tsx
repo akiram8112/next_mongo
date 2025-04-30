@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 interface Album {
   _id: string;
-  id : string;
+  // id : string;
   userId: string;
   title: string;
   image: string;
@@ -63,8 +63,8 @@ const Home: React.FC = () => {
             {albums.map((album) => (
               <AlbumCard
                 key={album._id}  
-                _id= {album._id} 
-                id={album.id}             
+                // _id= {album._id} 
+                // id={album.id}             
                 title={album.title}
                 // userId={album.userId}
                 image={album.image}
