@@ -53,6 +53,16 @@ const Home: React.FC = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  const handleEdit = (id: string) => {
+    console.log("Editing album with ID:", id);
+    // Implement your edit logic here
+  };
+  
+  const handleDelete = (id: string) => {
+    console.log("Deleting album with ID:", id);
+    // Implement your delete logic here
+  };
   return (
     <div>
       <Header title="Album Card" />
@@ -63,12 +73,14 @@ const Home: React.FC = () => {
             {albums.map((album) => (
               <AlbumCard
                 key={album._id}  
-                // _id= {album._id} 
+                _id= {album._id} 
                 // id={album.id}             
                 title={album.title}
                 // userId={album.userId}
                 image={album.image}
                 createdAt={album.createdAt}
+                onEdit={() => handleEdit(album._id)}
+                onDelete={() => handleDelete(album._id)}
               />
             ))}
           </AlbumList>
@@ -82,6 +94,7 @@ const Home: React.FC = () => {
 const containerStyle: React.CSSProperties= {
   padding: '20px',
   textAlign: 'center',
+  marginTop: '7rem'
 };
 
 

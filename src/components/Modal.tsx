@@ -26,10 +26,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
   return (
     <div style={overlayStyle}>
       <div style={modalStyle}>
-        <h2>Add New Album</h2>
+        <h2 style={{color:'black'}}>Add New Album</h2>
         <form>
-          <div>
-            <label>Title:</label>
+          <div style={containerStyle}>
+            <label style={labelStyle}>Title:</label>
             <input
               type="text"
               value={title}
@@ -37,8 +37,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
               style={inputStyle}
             />
           </div>
-          <div>
-            <label>Image URL:</label>
+          <div style={containerStyle}>
+            <label style={labelStyle}>Image URL:</label>
             <input
               type="text"
               value={imageUrl}
@@ -80,6 +80,19 @@ const modalStyle: React.CSSProperties = {
   borderRadius: '8px',
   width: '400px',
   textAlign: 'center',
+};
+
+const containerStyle: React.CSSProperties = {
+  display: 'flex',            // Align children horizontally
+  alignItems: 'center',       // Vertically center the children
+  gap: '10px',                // Optional: space between label and input
+};
+
+const labelStyle: React.CSSProperties = {
+  margin: 0,                  // Remove default margin
+  fontWeight: 'bold',         // Optional: style the label
+  minWidth: '80px',           // Optional: set a minimum width for label
+  color: 'black'
 };
 
 const inputStyle: React.CSSProperties = {
