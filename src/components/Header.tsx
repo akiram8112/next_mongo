@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Button from './Button';
 import Modal from './Modal';
+import { useRouter } from 'next/router';
 
 interface HeaderProps {
     title: string;
@@ -17,6 +18,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title }) => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const router = useRouter();
   
   const openModal = () => {
     setIsModalOpen(true);
@@ -25,16 +27,30 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
     setIsModalOpen(false);
   };
 
-  const handleAddAlbum = (title: string, imageUrl: string) => {
-    const newAlbum: Album = {
-      _id: new Date().toISOString(),  // Generate a simple ID for the new album
-      id: (albums.length + 1).toString(),
-      title: title,
-      image: imageUrl,
-      createdAt: new Date().toISOString(),
-    };
+  const handleAddAlbum = async (title: string, imageUrl: string) => {
+    try {
+      const response = await fetch('/api/albums', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          image: imageUrl,
+        }),
+      });
 
-    setAlbums((prevAlbums) => [...prevAlbums, newAlbum]); // Add new album to the list
+      if (!response.ok) {
+        throw new Error('Failed to add album');
+      }
+
+      const data = await response.json();
+      alert('Album added successfully!');
+      router.reload(); // Refresh the page to show the new album
+    } catch (error) {
+      console.error('Error adding album:', error);
+      alert('Failed to add album. Please try again.');
+    }
   };
   return (
     <header style={headerStyle}>

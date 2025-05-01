@@ -20,23 +20,8 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ _id, title,  image, createdAt, on
 
   const handleDelete = async (id: string) => {
     const confirmation = window.confirm('Are you sure you want to delete this album?');
-    if (confirmation) {
-      try {
-        const response = await fetch(`/api/albums/${id}`, {
-          method: 'DELETE',
-        });
-        const result = await response.json();
-        if (response.ok) {
-          alert(result.message);
-          // Optionally, remove the card from the UI after deletion
-          router.reload(); // Refresh the page to update the album list
-        } else {
-          alert(result.error);
-        }
-      } catch (error) {
-        console.error('Error deleting album:', error);
-        alert('Failed to delete album');
-      }
+    if (confirmation && onDelete) {
+      onDelete(id);
     }
   };
   return (

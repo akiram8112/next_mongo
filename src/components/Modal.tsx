@@ -1,32 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (title: string, imageUrl: string) => void;
+  mode?: 'add' | 'edit';
+  initialData?: {
+    title: string;
+    imageUrl: string;
+  };
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const [title, setTitle] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, mode = 'add', initialData }) => {
+  const [title, setTitle] = useState(initialData?.title || '');
+  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || '');
+
+  useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title);
+      setImageUrl(initialData.imageUrl);
+    }
+  }, [initialData]);
 
   const handleSubmit = () => {
     if (title && imageUrl) {
-      onSubmit(title, imageUrl); // Call onSubmit to pass the form data to the parent
-      setTitle(''); // Clear form inputs
+      onSubmit(title, imageUrl);
+      setTitle('');
       setImageUrl('');
-      onClose(); // Close the modal after submitting
+      onClose();
     } else {
       alert('Please fill in both fields!');
     }
   };
 
-  if (!isOpen) return null; // If the modal is closed, don't render it
+  if (!isOpen) return null;
 
   return (
     <div style={overlayStyle}>
       <div style={modalStyle}>
-        <h2 style={{color:'black'}}>Add New Album</h2>
+        <h2 style={{color:'black'}}>{mode === 'add' ? 'Add New Album' : 'Edit Album'}</h2>
         <form>
           <div style={containerStyle}>
             <label style={labelStyle}>Title:</label>
@@ -48,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
           </div>
           <div style={buttonContainerStyle}>
             <button type="button" onClick={handleSubmit} style={buttonStyle}>
-              Add
+              {mode === 'add' ? 'Add' : 'Save'}
             </button>
             <button type="button" onClick={onClose} style={cancelButtonStyle}>
               Cancel
@@ -101,11 +113,12 @@ const inputStyle: React.CSSProperties = {
   margin: '10px 0',
   borderRadius: '5px',
   border: '1px solid #ccc',
+  color: 'black'
 };
 
 const buttonContainerStyle: React.CSSProperties = {
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'space-evenly',
 };
 
 const buttonStyle: React.CSSProperties = {

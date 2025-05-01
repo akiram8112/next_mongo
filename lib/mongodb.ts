@@ -14,7 +14,7 @@ if (!MONGODB_DB) {
   throw new Error('Please define the MONGODB_DB environment variable');
 }
 
-async function connectToDatabase() {
+const connectToDatabase = async() => {
   if (db) {
     return { client, db };
   }
@@ -26,4 +26,4 @@ async function connectToDatabase() {
   return { client, db };
 }
 
-export default connectToDatabase;
+export { connectToDatabase };
